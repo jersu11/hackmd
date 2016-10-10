@@ -45,6 +45,11 @@
             "clientID": "change this",
             "clientSecret": "change this"
         },
+        "auth0": {
+            "domain": "change this"
+            "clientID": "change this",
+            "clientSecret": "change this"
+        },
         "imgur": {
             "clientID": "change this"
         }

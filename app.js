@@ -358,6 +358,20 @@ if (config.google) {
             failureRedirect: config.serverurl + '/'
         }));
 }
+//auth0 auth
+if (config.auth0) {
+    app.get('/auth/auth0', function (req, res, next) {
+        setReturnToFromReferer(req);
+        passport.authenticate('auth0', {})(req, res, next);
+    });
+    //auth0 auth callback
+    app.get('/auth/auth0/callback',
+        passport.authenticate('auth0', {
+            successReturnToOrRedirect: config.serverurl + '/',
+            failureRedirect: config.serverurl + '/'
+        }));
+}
+
 //logout
 app.get('/logout', function (req, res) {
     if (config.debug && req.isAuthenticated())
