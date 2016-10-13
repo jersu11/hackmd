@@ -1,10 +1,18 @@
+var config = require('./config');
+var domain = config.domain; // domain name
+var urlpath = config.urlpath; // sub url path, like: www.example.com/<urlpath>
+var debug = config.debug;
+var GOOGLE_API_KEY = config.GOOGLE_API_KEY;
+var GOOGLE_CLIENT_ID = config.GOOGLE_CLIENT_ID;
+var DROPBOX_APP_KEY = config.DROPBOX_APP_KEY;
+
 //common
 var port = window.location.port;
-var serverurl = window.location.protocol + '//' + (domain ? domain : window.location.hostname) + (port ? ':' + port : '') + (urlpath ? '/' + urlpath : '');
+window.serverurl = window.location.protocol + '//' + (domain ? domain : window.location.hostname) + (port ? ':' + port : '') + (urlpath ? '/' + urlpath : '');
 var noteid = urlpath ? window.location.pathname.slice(urlpath.length + 1, window.location.pathname.length).split('/')[1] : window.location.pathname.split('/')[1];
 var noteurl = serverurl + '/' + noteid;
 
-var version = '0.4.4';
+var version = '0.4.5';
 
 var checkAuth = false;
 var profile = null;
@@ -83,3 +91,30 @@ function checkIfAuth(yesCallback, noCallback) {
         noCallback();
     }
 }
+
+module.exports = {
+    domain: domain,
+    urlpath: urlpath,
+    debug: debug,
+    GOOGLE_API_KEY: GOOGLE_API_KEY,
+    GOOGLE_CLIENT_ID: GOOGLE_CLIENT_ID,
+    DROPBOX_APP_KEY: DROPBOX_APP_KEY,
+    port: port,
+    noteid: noteid,
+    noteurl: noteurl,
+    version: version,
+    checkAuth: checkAuth,
+    profile: profile,
+    lastLoginState: lastLoginState,
+    lastUserId: lastUserId,
+    loginStateChangeEvent: loginStateChangeEvent,
+
+    /* export functions */
+    resetCheckAuth: resetCheckAuth,
+    setLoginState: setLoginState,
+    checkLoginStateChanged: checkLoginStateChanged,
+    getLoginState: getLoginState,
+    getUserId: getUserId,
+    clearLoginState: clearLoginState,
+    checkIfAuth: checkIfAuth
+};

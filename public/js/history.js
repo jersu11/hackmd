@@ -1,4 +1,15 @@
-var migrateHistoryFromTempCallback = null;
+var store = require('store');
+
+var common = require('./common');
+var checkIfAuth = common.checkIfAuth;
+var urlpath = common.urlpath;
+var getLoginState = common.getLoginState;
+
+var extra = require('./extra');
+var renderFilename = extra.renderFilename;
+var md = extra.md;
+
+window.migrateHistoryFromTempCallback = null;
 
 migrateHistoryFromTemp();
 
@@ -96,8 +107,8 @@ function clearDuplicatedHistory(notehistory) {
             var id = notehistory[i].id.replace(/\=+$/, '');
             var newId = newnotehistory[j].id.replace(/\=+$/, '');
             if (id == newId || notehistory[i].id == newnotehistory[j].id || !notehistory[i].id || !newnotehistory[j].id) {
-                var time = moment(notehistory[i].time, 'MMMM Do YYYY, h:mm:ss a');
-                var newTime = moment(newnotehistory[j].time, 'MMMM Do YYYY, h:mm:ss a');
+                var time = (typeof notehistory[i].time === 'number' ? moment(notehistory[i].time) : moment(notehistory[i].time, 'MMMM Do YYYY, h:mm:ss a'));
+                var newTime = (typeof newnotehistory[i].time === 'number' ? moment(newnotehistory[i].time) : moment(newnotehistory[i].time, 'MMMM Do YYYY, h:mm:ss a'));
                 if(time >= newTime) {
                     newnotehistory[j] = notehistory[i];
                 }
@@ -247,7 +258,7 @@ function renderHistory(view) {
     return {
         id: id,
         text: title,
-        time: moment().format('MMMM Do YYYY, h:mm:ss a'),
+        time: moment().valueOf(),
         tags: tags
     };
 }
@@ -358,9 +369,10 @@ function parseToHistory(list, notehistory, callback) {
     else if (notehistory && notehistory.length > 0) {
         for (var i = 0; i < notehistory.length; i++) {
             //parse time to timestamp and fromNow
-            notehistory[i].timestamp = moment(notehistory[i].time, 'MMMM Do YYYY, h:mm:ss a').valueOf();
-            notehistory[i].fromNow = moment(notehistory[i].time, 'MMMM Do YYYY, h:mm:ss a').fromNow();
-            notehistory[i].time = moment(notehistory[i].time, 'MMMM Do YYYY, h:mm:ss a').format('llll');
+            var timestamp = (typeof notehistory[i].time === 'number' ? moment(notehistory[i].time) : moment(notehistory[i].time, 'MMMM Do YYYY, h:mm:ss a'));
+            notehistory[i].timestamp = timestamp.valueOf();
+            notehistory[i].fromNow = timestamp.fromNow();
+            notehistory[i].time = timestamp.format('llll');
             if (notehistory[i].id && list.get('id', notehistory[i].id).length == 0)
                 list.add(notehistory[i]);
         }
@@ -391,4 +403,19 @@ function deleteServerHistory(noteId, callback) {
         console.error(xhr.responseText);
         return callback(error, null);
     });
+}
+
+module.exports = {
+    writeHistory: writeHistory,
+    parseHistory: parseHistory,
+    getStorageHistory: getStorageHistory,
+    getHistory: getHistory,
+    saveHistory: saveHistory,
+    removeHistory: removeHistory,
+    parseStorageToHistory: parseStorageToHistory,
+    postHistoryToServer: postHistoryToServer,
+    deleteServerHistory: deleteServerHistory,
+    parseServerToHistory: parseServerToHistory,
+    saveStorageHistoryToServer: saveStorageHistoryToServer,
+    clearDuplicatedHistory: clearDuplicatedHistory
 }
