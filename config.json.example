@@ -51,6 +51,8 @@
             "clientSecret": "change this"
         },
         "imgur": {
+            "username": "change this",
+            "password": "change this",
             "clientID": "change this"
         }
     }

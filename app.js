@@ -425,7 +425,8 @@ app.post('/uploadimage', function (req, res) {
         } else {
             if (config.debug)
                 logger.info('SERVER received uploadimage: ' + JSON.stringify(files.image));
-            imgur.setClientId(config.imgur.clientID);
+            //imgur.setClientId(config.imgur.clientID);
+            imgur.setCredentials = function (config.imgur.username, config.imgur.password, config.imgur.clientID);
             try {
                 imgur.uploadFile(files.image.path)
                     .then(function (json) {
