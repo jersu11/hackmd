@@ -33,6 +33,11 @@
                     <i class="fa fa-dropbox"></i> <%= __('Sign in via %s', 'Dropbox') %>
                 </a>
                 <% } %>
+                <% if(auth0) { %>
+                <a href="<%- url %>/auth/auth0" class="btn btn-lg btn-block btn-social btn-auth0">
+                    <i class="fa fa-star-o"></i> <%= __('Sign in via %s', 'Auth0') %>
+                </a>
+                <% } %>
                 <% if(google) { %>
                 <a href="<%- url %>/auth/google" class="btn btn-lg btn-block btn-social btn-google">
                     <i class="fa fa-google"></i> <%= __('Sign in via %s', 'Google') %>

@@ -119,8 +119,13 @@ Environment variables (will overwrite other server configs)
 | HMD_GITLAB_CLIENTSECRET | no example | GitLab API client secret |
 | HMD_DROPBOX_CLIENTID | no example | Dropbox API client id |
 | HMD_DROPBOX_CLIENTSECRET | no example | Dropbox API client secret |
+| HMD_AUTH0_DOMAIN | no example | Auth0 API domain |
+| HMD_AUTH0_CLIENTID | no example | Auth0 API client id |
+| HMD_AUTH0_CLIENTSECRET | no example | Auth0 API client secret |
 | HMD_GOOGLE_CLIENTID | no example | Google API client id |
 | HMD_GOOGLE_CLIENTSECRET | no example | Google API client secret |
+| HMD_IMGUR_USERNAME | no example | Imgur API username |
+| HMD_IMGUR_PASSWORD | no example | Imgur API password |
 | HMD_IMGUR_CLIENTID | no example | Imgur API client id |
 
 Server settings `config.json`
@@ -163,7 +168,7 @@ Third-party integration api key settings
 
 | service | settings location | description |
 | ------- | --------- | ----------- |
-| facebook, twitter, github, gitlab, dropbox, google | environment variables or `config.json` | for signin |
+| facebook, twitter, github, gitlab, dropbox, google, auth0 | environment variables or `config.json` | for signin |
 | imgur | environment variables or `config.json` | for image upload |
 | google drive, dropbox | `public/js/config.js` | for export and import |
 
@@ -177,6 +182,7 @@ Third-party integration oauth callback urls
 | github | `/auth/github/callback` |
 | gitlab | `/auth/gitlab/callback` |
 | dropbox | `/auth/dropbox/callback` |
+| auth0 | `/auth/auth0/callback` |
 | google | `/auth/google/callback` |
 
 Operational Transformation
